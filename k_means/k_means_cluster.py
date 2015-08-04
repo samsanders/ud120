@@ -45,10 +45,38 @@ data_dict = pickle.load( open("../final_project/final_project_dataset.pkl", "r")
 data_dict.pop("TOTAL", 0)
 
 
+max_eso = -1
+min_eso = -1
+for key in data_dict:
+    curr_eso = data_dict[key]["exercised_stock_options"]
+    if curr_eso != "NaN":
+        if min_eso == -1:
+            min_eso = curr_eso
+        if curr_eso > max_eso:
+            max_eso = curr_eso
+        elif curr_eso < min_eso:
+            min_eso = curr_eso
+print max_eso, min_eso
+
+max_salary = -1
+min_salary = -1
+for key in data_dict:
+    curr_salary = data_dict[key]["salary"]
+    if curr_salary != "NaN":
+        if min_salary == -1:
+            min_salary = curr_salary
+        if curr_salary > max_salary:
+            max_salary = curr_salary
+        elif curr_salary < min_salary:
+            min_salary = curr_salary
+print max_salary, min_salary
+
+
 ### the input features we want to use 
 ### can be any key in the person-level dictionary (salary, director_fees, etc.) 
 feature_1 = "salary"
 feature_2 = "exercised_stock_options"
+feature_3 = "total_payments"
 poi  = "poi"
 features_list = [poi, feature_1, feature_2]
 data = featureFormat(data_dict, features_list )
@@ -71,7 +99,6 @@ data2 = featureFormat(data_dict, features_list )
 poi, finance_features = targetFeatureSplit( data2 )
 clf = KMeans(n_clusters=2)
 pred = clf.fit_predict( finance_features )
-Draw(pred, finance_features, poi, name="clusters_before_scaling.pdf", f1_name=feature_1, f2_name=feature_2)
 
 
 ### cluster here; create predictions of the cluster labels
