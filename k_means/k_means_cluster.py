@@ -93,6 +93,14 @@ plt.show()
 
 
 
+from sklearn import preprocessing
+scaler = preprocessing.MinMaxScaler()
+finance_features_scaled = scaler.fit_transform(finance_features)
+
+test = scaler.transform([[200000., 1000000.]])
+print test
+
+
 from sklearn.cluster import KMeans
 features_list = ["poi", feature_1, feature_2]
 data2 = featureFormat(data_dict, features_list )
@@ -103,12 +111,12 @@ pred = clf.fit_predict( finance_features )
 
 ### cluster here; create predictions of the cluster labels
 ### for the data and store them to a list called pred
-
+"""
 try:
     Draw(pred, finance_features, poi, mark_poi=False, name="clusters.pdf", f1_name=feature_1, f2_name=feature_2)
 except NameError:
     print "no predictions object named pred found, no clusters to plot"
-
+"""
 
 
 
